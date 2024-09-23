@@ -168,9 +168,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_data[user_id] = {"points": 0, "step": 0, "skill": None, "messages": []}
 
         # Отправка ссылки на музыку в начале
-        music_path = "final_music.mp3"
+        music_path = "listen_to_me.mp3"
         with open(music_path, 'rb') as music:
-            msg = await update.message.reply_audio(music)
+            msg = await update.message.reply_audio(music, title="")
             user_data[user_id]["messages"].append(msg.message_id)
 
 
@@ -222,8 +222,6 @@ async def ask_step(update_or_query, context: ContextTypes.DEFAULT_TYPE):
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
 
-        # Добавляем небольшую задержку перед вопросом
-        await asyncio.sleep(1.5)
 
         if hasattr(update_or_query, 'message'):
             msg = await update_or_query.message.reply_text(step["text"], reply_markup=reply_markup)
